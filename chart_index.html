@@ -1,0 +1,294 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.wrap { padding: 1rem 0; }
+.header { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
+.header-title { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+.header-price { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+.header-sub { font-size: 13px; color: var(--color-text-secondary); }
+.section { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.section-title { font-size: 14px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.trend-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.trend-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem; }
+.trend-tf { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
+.trend-dir { font-size: 14px; font-weight: 500; }
+.trend-up { color: #1D9E75; }
+.trend-down { color: #E24B4A; }
+.trend-range { color: #BA7517; }
+.levels-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.level-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem; background: var(--color-background-secondary); border-radius: var(--border-radius-md); margin-bottom: 6px; }
+.level-label { font-size: 13px; color: var(--color-text-secondary); }
+.level-price { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 500; }
+.badge-strong { background: #FCEBEB; color: #A32D2D; }
+.badge-mid { background: #FAEEDA; color: #854F0B; }
+.badge-weak { background: #EAF3DE; color: #3B6D11; }
+.badge-res { background: #FCEBEB; color: #A32D2D; }
+.badge-sup { background: #EAF3DE; color: #3B6D11; }
+.scenario { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.s1 { border-left: 3px solid #1D9E75; }
+.s2 { border-left: 3px solid #BA7517; }
+.s3 { border-left: 3px solid #E24B4A; }
+.scenario-header { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
+.scenario-num { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+.prob-badge { font-size: 11px; padding: 2px 10px; border-radius: 12px; font-weight: 500; }
+.prob-high { background: #E1F5EE; color: #0F6E56; }
+.prob-mid { background: #FAEEDA; color: #854F0B; }
+.prob-low { background: #FCEBEB; color: #A32D2D; }
+.dir-badge { font-size: 11px; padding: 2px 10px; border-radius: 12px; font-weight: 500; }
+.dir-long { background: #EAF3DE; color: #3B6D11; }
+.dir-short { background: #FCEBEB; color: #A32D2D; }
+.dir-wait { background: #FAEEDA; color: #854F0B; }
+.detail-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 0.75rem; }
+.detail-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem; }
+.detail-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 3px; }
+.detail-val { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+.detail-val.green { color: #1D9E75; }
+.detail-val.red { color: #E24B4A; }
+.detail-val.amber { color: #BA7517; }
+.trigger-box { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem; margin-bottom: 0.5rem; }
+.trigger-item { font-size: 13px; color: var(--color-text-primary); padding: 3px 0; display: flex; gap: 8px; }
+.trigger-num { color: var(--color-text-secondary); min-width: 16px; }
+.timing-box { background: var(--color-background-secondary); border-left: 3px solid #378ADD; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 0.6rem 0.75rem; margin-bottom: 0.5rem; font-size: 13px; color: var(--color-text-primary); }
+.invalid-box { background: var(--color-background-secondary); border-left: 3px solid #E24B4A; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 0.6rem 0.75rem; font-size: 13px; color: var(--color-text-primary); }
+.footer { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; }
+.footer-title { font-size: 14px; font-weight: 500; margin-bottom: 0.5rem; }
+.footer-text { font-size: 13px; color: var(--color-text-primary); line-height: 1.6; }
+.session-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 0.75rem; }
+.session-ok { background: #E1F5EE; border-radius: var(--border-radius-md); padding: 0.6rem 0.75rem; font-size: 12px; color: #0F6E56; }
+.session-ng { background: #FCEBEB; border-radius: var(--border-radius-md); padding: 0.6rem 0.75rem; font-size: 12px; color: #A32D2D; }
+.divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 0.75rem 0; }
+</style>
+<div class="wrap">
+  <div class="header">
+    <div>
+      <div class="header-title">XAUUSD — マルチタイム分析</div>
+      <div class="header-sub">日足 / 4H / 1H / 15M　2026年5月1日 09:10 JST</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="header-price">4,627.75</div>
+      <div class="header-sub">+5.69 (+0.12%)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">トレンド分析</div>
+    <div class="trend-grid">
+      <div class="trend-card">
+        <div class="trend-tf">日足</div>
+        <div class="trend-dir trend-down">下降継続中</div>
+        <div style="font-size:11px;color:var(--color-text-secondary);margin-top:4px;">強度：強</div>
+      </div>
+      <div class="trend-card">
+        <div class="trend-tf">4時間足</div>
+        <div class="trend-dir trend-up">切り上げ中</div>
+        <div style="font-size:11px;color:var(--color-text-secondary);margin-top:4px;">強度：中</div>
+      </div>
+      <div class="trend-card">
+        <div class="trend-tf">1時間足</div>
+        <div class="trend-dir trend-up">戻り上昇中</div>
+        <div style="font-size:11px;color:var(--color-text-secondary);margin-top:4px;">強度：中</div>
+      </div>
+      <div class="trend-card">
+        <div class="trend-tf">15分足</div>
+        <div class="trend-dir trend-range">レンジ気味</div>
+        <div style="font-size:11px;color:var(--color-text-secondary);margin-top:4px;">強度：弱</div>
+      </div>
+    </div>
+    <div style="margin-top:0.75rem;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:0.75rem;font-size:13px;color:var(--color-text-primary);">
+      トレンドライン根拠：日足は高値5,500圏→4,100圏の大規模下降トレンド継続。4H・1Hは4/30安値4,510付近を底に切り上げ開始。15分は4,620〜4,640のレンジ内で推移。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">レジスタンス / サポートゾーン</div>
+    <div style="margin-bottom:6px;font-size:12px;color:var(--color-text-secondary);">レジスタンス</div>
+    <div class="level-row">
+      <div class="level-label">R①</div>
+      <div class="level-price">4,650〜4,680</div>
+      <span class="badge badge-strong">強</span>
+      <div style="font-size:11px;color:var(--color-text-secondary);flex:1;margin-left:8px;">4H戻り高値・日足下降TL付近</div>
+    </div>
+    <div class="level-row">
+      <div class="level-label">R②</div>
+      <div class="level-price">4,800〜4,830</div>
+      <span class="badge badge-strong">強</span>
+      <div style="font-size:11px;color:var(--color-text-secondary);flex:1;margin-left:8px;">4H戻り高値・複数回意識ゾーン</div>
+    </div>
+    <div style="margin-top:0.75rem;margin-bottom:6px;font-size:12px;color:var(--color-text-secondary);">サポート</div>
+    <div class="level-row">
+      <div class="level-label">S①</div>
+      <div class="level-price">4,600〜4,620</div>
+      <span class="badge badge-mid">中</span>
+      <div style="font-size:11px;color:var(--color-text-secondary);flex:1;margin-left:8px;">現在価格付近・4H転換ゾーン</div>
+    </div>
+    <div class="level-row">
+      <div class="level-label">S②</div>
+      <div class="level-price">4,500〜4,510</div>
+      <span class="badge badge-strong">強</span>
+      <div style="font-size:11px;color:var(--color-text-secondary);flex:1;margin-left:8px;">4/30直近安値・4H切り上げ起点</div>
+    </div>
+  </div>
+
+  <div class="scenario s1">
+    <div class="scenario-header">
+      <div class="scenario-num">第1シナリオ</div>
+      <span class="prob-badge prob-high">確率：高</span>
+      <span class="dir-badge dir-long">押し目ロング</span>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-card">
+        <div class="detail-label">エントリー価格</div>
+        <div class="detail-val green">4,600〜4,615</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">SL</div>
+        <div class="detail-val red">4,578</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">TP1 / TP2</div>
+        <div class="detail-val">4,650 / 4,730</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">RR比</div>
+        <div class="detail-val amber">TP1 1.7R / TP2 3.9R</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">ATR(14)</div>
+        <div class="detail-val">約45ドル</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">SL幅 / ATR倍率</div>
+        <div class="detail-val">32ドル / 0.71倍</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;">エントリー根拠：4H切り上げ継続中、4,600〜4,620サポートゾーンへの押し目。15分足で20MAとのTL裏タッチ確認後に執行。</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;">SL根拠：4,600サポート割れで切り上げ構造崩壊。4,500方向への下落継続を示唆。</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px;">TP根拠：TP1は4,650〜4,680レジスタンス下限。TP2は4H戻り高値ゾーン。</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;">許容リスク：2%　／　SL幅：32ドル　／　推奨ロット：資金に応じて算出</div>
+    <hr class="divider">
+    <div class="trigger-box">
+      <div class="trigger-item"><span class="trigger-num">①</span>15分足が4,600〜4,615に到達すること</div>
+      <div class="trigger-item"><span class="trigger-num">②</span>15分足の陽線実体で反発確定（ヒゲのみの反発は不可）</div>
+      <div class="trigger-item"><span class="trigger-num">③</span>20MAが上向きかつTL裏またはMA接触を確認</div>
+    </div>
+    <div class="timing-box">執行タイミング：上記3条件が揃った足の次の足でエントリー</div>
+    <div class="invalid-box">無効化条件：4,578を実体で割り込んだ場合はシナリオ撤退</div>
+  </div>
+
+  <div class="scenario s2">
+    <div class="scenario-header">
+      <div class="scenario-num">第2シナリオ</div>
+      <span class="prob-badge prob-mid">確率：中</span>
+      <span class="dir-badge dir-long">ブレイク追随ロング</span>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-card">
+        <div class="detail-label">エントリー価格</div>
+        <div class="detail-val green">4,655〜4,665（定着確認後）</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">SL</div>
+        <div class="detail-val red">4,630</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">TP1 / TP2</div>
+        <div class="detail-val">4,730 / 4,800</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">RR比</div>
+        <div class="detail-val amber">TP1 2.8R / TP2 5.6R</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">ATR(14)</div>
+        <div class="detail-val">約45ドル</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">SL幅 / ATR倍率</div>
+        <div class="detail-val">30ドル / 0.67倍</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;">エントリー根拠：4,650〜4,680レジスタンスを15分足実体で上抜け後、戻りで4,650付近がサポートに転換確認。</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;">SL根拠：転換したサポートラインを再び下抜けた場合はブレイク失敗と判断。</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px;">TP根拠：TP1は4H次のレジスタンス手前。TP2は4H戻り高値ゾーン。</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;">許容リスク：1%（ブレイク追随のためリスク抑制）　／　SL幅：30ドル　／　推奨ロット：資金に応じて算出</div>
+    <hr class="divider">
+    <div class="trigger-box">
+      <div class="trigger-item"><span class="trigger-num">①</span>4,650〜4,680を15分足実体で上抜け確定</div>
+      <div class="trigger-item"><span class="trigger-num">②</span>上抜け後の戻りで4,650付近がサポートとして機能確認</div>
+      <div class="trigger-item"><span class="trigger-num">③</span>ロンドン・NYセッション中（日本時間15:00〜）であること</div>
+    </div>
+    <div class="timing-box">執行タイミング：条件②のサポート確認足の次の足でエントリー</div>
+    <div class="invalid-box">無効化条件：4,650を実体で再び下抜けた場合</div>
+  </div>
+
+  <div class="scenario s3">
+    <div class="scenario-header">
+      <div class="scenario-num">第3シナリオ</div>
+      <span class="prob-badge prob-low">確率：低</span>
+      <span class="dir-badge dir-short">戻り売りショート</span>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-card">
+        <div class="detail-label">エントリー価格</div>
+        <div class="detail-val red">4,650〜4,680（上値否定確認後）</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">SL</div>
+        <div class="detail-val red">4,705</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">TP1 / TP2</div>
+        <div class="detail-val">4,600 / 4,510</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">RR比</div>
+        <div class="detail-val amber">TP1 1.4R / TP2 3.2R</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">ATR(14)</div>
+        <div class="detail-val">約45ドル</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">SL幅 / ATR倍率</div>
+        <div class="detail-val">35ドル / 0.78倍</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;">エントリー根拠：日足下降TLが有効。4,650〜4,680レジスタンスゾーンで上ヒゲ陰線または包み足出現。4H切り上げが否定された場合に限定。</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;">SL根拠：レジスタンスゾーン上限を明確に超えた場合はシナリオ否定。</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px;">TP根拠：TP1は現在価格付近サポート転換ゾーン。TP2は4/30直近安値・強サポート。</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;">許容リスク：1%（逆張り要素があるためリスク抑制）　／　SL幅：35ドル　／　推奨ロット：資金に応じて算出</div>
+    <hr class="divider">
+    <div class="trigger-box">
+      <div class="trigger-item"><span class="trigger-num">①</span>4,650〜4,680到達後、15分足で上ヒゲ陰線または陰線包み足が出現</div>
+      <div class="trigger-item"><span class="trigger-num">②</span>15分足で直近安値を実体で下抜け確認</div>
+      <div class="trigger-item"><span class="trigger-num">③</span>20MAが下向きに転換していること</div>
+    </div>
+    <div class="timing-box">執行タイミング：上記3条件が揃った足の次の足でエントリー</div>
+    <div class="invalid-box">無効化条件：4,705を実体で上抜けた場合はシナリオ撤退</div>
+  </div>
+
+  <div class="section" style="margin-bottom:1rem;">
+    <div class="section-title">有効セッション</div>
+    <div class="session-grid">
+      <div class="session-ok">推奨：ロンドン（日本時間 15:00〜）/ NY前半（21:00〜）</div>
+      <div class="session-ng">非推奨：東京時間（ダマシ・スプレッド拡大リスク）</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-title">総合判断</div>
+    <div class="footer-text" style="margin-bottom:0.75rem;">
+      シナリオ優先順位の判定：ロング条件3つ以上（日足は下降継続だがS②で底打ち確認 / 4H足が切り上げ継続中 / 現在価格がS①付近 / 直近押し安値4,510を割っていない）→ 第1シナリオはロング優先。
+    </div>
+    <div class="footer-text" style="margin-bottom:0.75rem;">
+      第1シナリオ押し目ロングを最優先。4,600〜4,615への押し目と15分足の反発確認を待って執行。4,650ブレイク定着確認で第2シナリオへ移行。現時点でレジスタンス付近まで上昇している場合は無理に追わず、第1シナリオの押し目を待つこと。
+    </div>
+    <hr class="divider">
+    <div class="footer-title" style="margin-bottom:0.5rem;">注意点・補足</div>
+    <div class="footer-text">
+      日足は5,500圏→4,100圏の約1,400ドル下落後の戻り局面。大きな下降トレンドの中の反発であるため、4,650〜4,680レジスタンスでの上値は重い可能性が高い。4,578を実体で割った場合は全シナリオを撤退し、4,500〜4,510の強サポート再タッチを待つこと。重要指標（FOMC・雇用統計等）前後はスプレッド拡大・急変動に注意。
+    </div>
+  </div>
+</div>
